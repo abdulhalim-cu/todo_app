@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="librarybook.list">
+      <field name="name">librarybook list</field>
+      <field name="model">librarybook.librarybook</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="librarybook.action_window">
+      <field name="name">librarybook window</field>
+      <field name="res_model">librarybook.librarybook</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="librarybook.action_server">
+      <field name="name">librarybook server</field>
+      <field name="model_id" ref="model_librarybook_librarybook"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="librarybook" id="librarybook.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="librarybook.menu_1" parent="librarybook.menu_root"/>
+    <menuitem name="Menu 2" id="librarybook.menu_2" parent="librarybook.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="librarybook.menu_1_list" parent="librarybook.menu_1"
+              action="librarybook.action_window"/>
+    <menuitem name="Server to list" id="librarybook" parent="librarybook.menu_2"
+              action="librarybook.action_server"/>
+    -->
+  </data>
+</odoo>
