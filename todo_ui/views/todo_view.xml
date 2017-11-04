@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+	<act_window id="action_todo_task_button" name="To-Do Tasks"
+			res_model="todo.task"
+			view_mode="tree,form,calendar,graph,pivot"
+			domain="[('user_id', '=', default_user_id)]"/>
+	
 	<record model="ir.ui.view" id="view_form_todo_task_ui">
 		<field name="model">todo.task</field>
 		<field name="priority">15</field>
@@ -28,7 +33,16 @@
 						</h3>
 					</div>
 					<!-- Smart buttons area -->
-					<div name="buttons" class="oe_right oe_button_box"></div>
+					<div name="buttons" class="oe_right oe_button_box">
+						<button class="oe_state_button"
+								type="action" icon="fa-tasks"
+								name="%(action_todo_task_button)d"	
+								context="{'default_user_id': user_id}"
+								help="All to-dos for this user">
+							<field string="To-Dos" name="user_todo_count"
+									widget="statinfo"/>
+						</button>
+					</div>
 					<!-- Grouping content in a form -->
 					<group name="group_top">
 						<group name="group_left">
@@ -47,5 +61,70 @@
 				</div>
 			</form>	
 		</field>	
+	</record>
+	<!-- List view -->
+	<record id="todo_app.view_tree_todo_task" 
+			model="ir.ui.view">
+		<field name="model">todo.task</field>
+		<field name="arch" type="xml">
+			<tree decoration-muted="is_done" decoration-bf="state=='open'" delete="false">
+				<field name="name"/>
+				<field name="user_id"/>
+				<field name="is_done"/>
+				<field name="state" invisible="1"/>
+			</tree>	
+		</field>
+	</record>
+
+	<!-- Search view -->
+	<record id="todo_app.view_filter_todo_task" model="ir.ui.view">
+		<field name="model">todo.task</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name"/>
+				<field name="user_id"/>
+				<filter name="filter_not_done" string="Not Done" 
+					domain="[('is_done', '=', False)]"/>
+				<filter name="filter_done" string="Done"
+					domain="[('is_done', '!=', False)]"/>
+				<separator/>
+				<filter name="group_user" string="By User" 
+					context="{'group_by': 'user_id'}"/>
+			</field>
+		</search>	
+	</record>
+	<!-- Calendar View -->
+	<record id="view_calendar_todo_task" model="ir.ui.view">
+		<field name="model">todo.task</field>
+		<field name="arch" type="xml">
+			<calendar date_start="date_deadline" color="user_id"
+				display="[name], Stage [state_id]">
+				<!-- Fields used for the display text -->
+				<field name="name"/>
+				<field name="stage_id"/>	
+			</calendar>
+		</field>	
+	</record>
+
+	<!-- Graph View -->
+	<record id="view_graph_todo_task" model="ir.ui.view">
+		<field name="model">todo.task</field>	
+		<field name="arch" type="xml">
+			<graph type="bar">
+				<field name="stage_id"/>
+				<field name="effort_estimate" type="measure"/>	
+			</graph>	
+		</field>
+	</record>
+	<!-- Pivot View -->
+	<record id="view_pivot_todo_task" model="ir.ui.view">
+		<field name="arch" type="xml">
+			<pivot>
+				<field name="stage_id" type="col"/>
+				<field name="user_id" />
+				<field name="date_deadline" interval="week"/>
+				<field name="effort_estimate" type="measure"/>	
+			</pivot>	
+		</field>
 	</record>
 </odoo>
