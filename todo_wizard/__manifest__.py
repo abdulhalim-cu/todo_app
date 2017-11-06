@@ -2,7 +2,7 @@
 {
     'name': "To-Do Tasks Management Assistant",
 
-    'summary': """Mass edit your To-Do backlog.""", 
+    'summary': """Mass edit your To-Do backlog.""",
     'description': """
         Long description of module's purpose
     """,
@@ -15,6 +15,7 @@
     # for the full list
     'category': 'Uncategorized',
     'version': '0.1',
+    'application': True,
 
     # any module necessary for this one to work correctly
     'depends': ['todo_user'],
