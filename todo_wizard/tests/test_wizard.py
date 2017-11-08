@@ -1,25 +1,43 @@
 # -*- coding: utf-8 -*-
 
 from odoo.tests.common import TransactionCase
+from datetime import date
+from odoo import fields
 
 
 class TestWizrd(TransactionCase):
 
     def setUp(self, *args, **kwargs):
         super(TestWizrd, self).setUp(*args, **kwargs)
-        # Add test setup code here...
+        # Close any open Todo tasks
+        self.env['todo.task']\
+            .search([('is_done', '=', False)]).write({'is_done': True})
+        # demo user will be used to run tests
+        demo_user = self.env.ref('base.user_demo')
+        # create two todo tasks to use in tests
+        t0 = date.today()
+        Todo = self.env['todo.task'].sudo(demo_user)
+        self.todo1 = Todo.create({
+            'name': 'Todo1',
+            'date_deadline': fields.Date.to_string(t0)
+            })
+        self.todo2 = Todo.create({
+            'name': 'Todo2'
+            })
+        # create wizard instance to use in tests
+        Wizard = self.env['todo.wizard'].sudo(demo_user)
+        self.wizard = Wizard.create({})
 
     def test_populate_tasks(self):
         "Populate tasks buttons should add two tasks"
         self.wizard.do_populate_tasks()
-        # count = len(self.wizard.task_ids)
-        # self.assertEqual(count, 2, "Wrong number of populated tasks")
-        expected_tasks = self.wizard.task_ids
-        self.assertItemsEquals(
-                self.wizard.task_ids, expected_tasks,
-                'Incorrect set of populated tasks'
-
-                )
+        count = len(self.wizard.task_ids)
+        self.assertEqual(count, 2, "Wrong number of populated tasks")
+        # expected_tasks = self.wizard.task_ids
+        # self.assertItemsEquals(
+        #        self.wizard.task_ids, expected_tasks,
+        #        'Incorrect set of populated tasks'
+        #        )
 
     def test_mass_change(self):
         "Mass change dateline date"
