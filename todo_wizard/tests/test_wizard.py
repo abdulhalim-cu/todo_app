@@ -3,6 +3,7 @@
 from odoo.tests.common import TransactionCase
 from datetime import date
 from odoo import fields
+from odoo.exceptions import Warning
 
 
 class TestWizrd(TransactionCase):
@@ -47,3 +48,9 @@ class TestWizrd(TransactionCase):
         self.assertEqual(
                 self.todo1.date_deadline,
                 self.todo2.date_deadline)
+
+    def test_count(self):
+        "Test count button"
+        with self.assertRaises(Warning) as e:
+            self.wizard.do_count_tasks()
+        self.assertIn(' 2 ', str(e.exceptions))
