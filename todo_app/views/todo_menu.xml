@@ -6,6 +6,13 @@
 		res_model="todo.task"
 		view_mode="tree,form"/>
 
+	<!-- Action to open todo wizard -->
+	<act_window id="action_todo_wizard" name="To-Do Wizard" res_model="todo.task"
+		view_mode="tree,form"/>
+
+	<!-- Menu itme to open wizard -->
+	<menuitem id="menu_todo_wizard" name="Wizard" action="action_todo_wizard"/>
+
 	<!-- Menu item to open todo task list -->
 	<menuitem id="menu_todo_task" 
 		name="Todo"
