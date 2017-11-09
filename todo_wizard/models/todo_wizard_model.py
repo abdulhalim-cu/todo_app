@@ -50,6 +50,8 @@ class TodoWizard(models.TransientModel):
 
     @api.multi
     def do_populate_tasks(self):
+        import pdb
+        pdb.set_trace()
         self.ensure_one()
         Task = self.env['todo.task']
         open_tasks = Task.search([('is_done', '=', False)])
