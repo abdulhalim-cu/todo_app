@@ -8,7 +8,7 @@
     'category': 'Uncategorized',
     'version': '0.1',
     'application': True,
-    'depends': ['base'],
+    'depends': ['base', 'report'],
     'data': [
         'reports/todo_report.xml',
     ],
